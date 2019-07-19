@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <service android:name=".CoreService" />
+        <service android:name=".task.CoreService" />
     </application>
 
 </manifest>
