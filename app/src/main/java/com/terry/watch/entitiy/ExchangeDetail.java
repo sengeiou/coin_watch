@@ -121,12 +121,12 @@ public class ExchangeDetail {
              */
 
             public String id;
-            public String filled_qty;
-            public String price_avg;
+            public String filled_qty; //张数
+            public String price_avg; //操作价格
             public int type;
-            public String realised_pnl;
+            public String realised_pnl; //收益
             public ColorsBeanX colors;
-            public String timestamp;
+            public String timestamp; //时间
 
             public static class ColorsBeanX {
                 /**

@@ -1,6 +1,7 @@
 package com.terry.watch.http;
 
 import com.terry.watch.Constant;
+import com.terry.watch.entitiy.DistributionResponse;
 import com.terry.watch.entitiy.ExchangeDetail;
 import com.terry.watch.entitiy.FllowReponse;
 import com.terry.watch.entitiy.PositionResponse;
@@ -19,4 +20,7 @@ public interface HttpService {
 
     @GET
     Observable<ExchangeDetail> getChangeDetail(@Url String url);
+
+    @GET
+    Observable<DistributionResponse> getDistribution(@Url String url);
 }

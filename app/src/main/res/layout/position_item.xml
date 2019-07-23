@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="center"
+    android:background="@drawable/position_border">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_008577"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        tools:text="BTC季度" />
+
+    <TextView
+        android:id="@+id/item_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_marginLeft="5dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        tools:text="20.8%" />
+
+    <TextView
+        android:id="@+id/avg_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_ratio"
+        android:layout_marginLeft="5dp"
+        android:textSize="11sp"
+        android:text="均价" />
+
+    <TextView
+        android:id="@+id/item_avg_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/avg_price"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:textSize="11sp"
+        android:text="均价" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avg_price"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="11sp"
+        android:text="持仓" />
+
+    <TextView
+        android:id="@+id/item_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/quantity"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:textSize="11sp"
+        android:text="均价" />
+
+    <TextView
+        android:id="@+id/position_worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quantity"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="11sp"
+        android:text="价值" />
+
+    <TextView
+        android:id="@+id/item_position_worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/position_worth"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:textSize="11sp"
+        android:text="均价" />
+
+</RelativeLayout>
