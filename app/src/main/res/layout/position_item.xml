@@ -7,6 +7,7 @@
     android:layout_marginRight="5dp"
     android:paddingBottom="5dp"
     android:gravity="center"
+    android:id="@+id/item_container"
     android:background="@drawable/position_border">
 
     <TextView

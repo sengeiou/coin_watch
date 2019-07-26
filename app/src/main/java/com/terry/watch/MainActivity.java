@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        homeViewModel.getHomeData(UID);
+
     }
 
     private void initView() {
@@ -149,5 +149,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeViewModel.getHomeData(UID);
+    }
 }

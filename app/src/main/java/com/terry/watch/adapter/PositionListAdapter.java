@@ -1,6 +1,7 @@
 package com.terry.watch.adapter;
 
 import android.graphics.Color;
+import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,6 +23,16 @@ public class PositionListAdapter extends BaseQuickAdapter<PositionResponse.DataB
 
     @Override
     protected void convert(BaseViewHolder helper, PositionResponse.DataBean.PositionBean item) {
+        View container = helper.getView(R.id.item_container);
+        if(item.title.endsWith("多")){
+            helper.setBackgroundRes(R.id.item_container,R.drawable.position_border);
+            helper.setBackgroundColor(R.id.item_name,container.getResources().getColor(R.color.color_008577));
+            helper.setTextColor(R.id.item_name,container.getResources().getColor(R.color.colorPrimary));
+        }else{
+            helper.setBackgroundRes(R.id.item_container,R.drawable.kong_border);
+            helper.setBackgroundColor(R.id.item_name,container.getResources().getColor(R.color.kong_color_bg));
+            helper.setTextColor(R.id.item_name,container.getResources().getColor(R.color.kong_color));
+        }
         helper.setText(R.id.item_name, item.title);
         TextView tv_ratio = helper.getView(R.id.item_ratio);
         helper.setText(R.id.item_ratio, item.unrealised_pnl_ratio);

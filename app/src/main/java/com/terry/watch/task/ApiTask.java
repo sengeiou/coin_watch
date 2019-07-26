@@ -218,7 +218,7 @@ public class ApiTask extends ScheduleTask {
                             continue;
                         }
                         if (content.length() == 0) {
-                            content.append("肥仔有新操作了：\n");
+                            content.append("肥仔有新操作了：");
                         }
                         if (lastValue > nowValue) { //减仓
                             content.append(name + "减仓"+diff + "张 ");
