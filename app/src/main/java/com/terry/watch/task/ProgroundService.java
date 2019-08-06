@@ -47,7 +47,7 @@ public class ProgroundService extends Service {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
+                    "Channel", NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.RED); //小红点颜色
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -71,7 +71,7 @@ public class ProgroundService extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent);
         Notification notify = mBuilder.build();
-        startForeground(1, notify);
+        startForeground(999, notify);
     }
 
     @Override

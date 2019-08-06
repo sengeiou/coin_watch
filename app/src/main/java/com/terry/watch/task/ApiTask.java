@@ -15,8 +15,6 @@ import com.android.util.scheduler.task.ScheduleTask;
 import com.terry.watch.Constant;
 import com.terry.watch.MainActivity;
 import com.terry.watch.R;
-import com.terry.watch.entitiy.ExchangeDetail;
-import com.terry.watch.entitiy.FllowReponse;
 import com.terry.watch.entitiy.PositionResponse;
 import com.terry.watch.http.UserClient;
 
@@ -60,26 +58,25 @@ public class ApiTask extends ScheduleTask {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
+                    "Channel", NotificationManager.IMPORTANCE_HIGH);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.RED); //小红点颜色
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
-            mBuilder = new NotificationCompat.Builder(LContext.getContext(), channelId);
             notificationManager.createNotificationChannel(channel);
-        } else {
-            mBuilder = new NotificationCompat.Builder(LContext.getContext());
         }
     }
 
     private void sendNotification(String text) {
         if (text.isEmpty()) return;
         notifyId += 1;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            mBuilder = new NotificationCompat.Builder(LContext.getContext(), channelId);
+        }else{
+            mBuilder = new NotificationCompat.Builder(LContext.getContext());
+        }
         Intent intent = new Intent(LContext.getContext(), MainActivity.class);
-//        Intent intent = new Intent();
-//        intent.setClassName("com.heyuedi.market","heyuedi.market.mvp.masterhome.MasterHomeActivity");
-
-
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(LContext.getContext(), 0, intent,
                 0);
@@ -88,7 +85,8 @@ public class ApiTask extends ScheduleTask {
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
 
         Notification notify = mBuilder.build();
