@@ -49,15 +49,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, CoreService.class));
-        startService(new Intent(this, ProgroundService.class));
-
-//        startActivity(new Intent(this,WebViewActivity.class));
-
-//        Intent intent = new Intent();
-//        intent.setComponent(new ComponentName("com.heyuedi.market","heyuedi.market.mvp.masterhome.MasterHomeActivity"));
-//        startActivity(intent);
-
         initView();
         initData();
     }

@@ -1,12 +1,15 @@
 package com.terry.watch;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.android.util.LContext;
 import com.android.util.scheduler.task.ScheduleTaskManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.terry.watch.task.ApiTask;
+import com.terry.watch.task.CoreService;
+import com.terry.watch.task.ProgroundService;
 
 /**
  * @author 张全
@@ -32,5 +35,12 @@ public class App extends Application {
 
         LContext.init(this,true);
         ScheduleTaskManager.getInstance().addTask(new ApiTask());
+
+        try{
+            startService(new Intent(this, CoreService.class));
+            startService(new Intent(this, ProgroundService.class));
+        }catch(Throwable e){
+            e.printStackTrace();
+        }
     }
 }
