@@ -74,7 +74,7 @@ public class ProgroundService extends Service {
 
     private void startForground() {
         initNotification();
-        Intent intent = new Intent(LContext.getContext(), UserActivity.class);
+        Intent intent = new Intent(LContext.getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(LContext.getContext(), 0, intent,
                 0);
