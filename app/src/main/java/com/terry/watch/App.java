@@ -8,6 +8,7 @@ import com.android.util.scheduler.task.ScheduleTaskManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.terry.watch.task.ApiTask;
+import com.terry.watch.task.ApiTask2;
 import com.terry.watch.task.CoreService;
 import com.terry.watch.task.ProgroundService;
 
@@ -35,6 +36,7 @@ public class App extends Application {
 
         LContext.init(this,true);
         ScheduleTaskManager.getInstance().addTask(new ApiTask());
+        ScheduleTaskManager.getInstance().addTask(new ApiTask2());
 
         try{
             startService(new Intent(this, CoreService.class));

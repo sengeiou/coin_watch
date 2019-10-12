@@ -30,8 +30,8 @@ public class UserClient {
      * @param uid
      * @return
      */
-    public static Observable<PositionResponse> getPositionList(String uid) {
-        String url = Constant.HOST + Constant.POSITION + "?uid=" + uid + "&exchange=okex";
+    public static Observable<PositionResponse> getPositionList(String uid,String platform) {
+        String url = Constant.HOST + Constant.POSITION + "?uid=" + uid + "&exchange="+platform;
         return RestClient.getService(HttpService.class)
                 .getPositionList(url);
     }
@@ -61,7 +61,7 @@ public class UserClient {
 
 
     public static String getToken() {
-        return "c08ceafb6e1061d0fd1f0b7830db527c";
+        return "08f1b6d9c1f42dc3d17d64bbf5111590";
     }
 
     public static void setToken(String token) {

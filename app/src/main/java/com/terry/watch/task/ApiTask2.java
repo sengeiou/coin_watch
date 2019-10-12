@@ -15,6 +15,7 @@ import com.android.util.scheduler.task.ScheduleTask;
 import com.terry.watch.Constant;
 import com.terry.watch.UserActivity;
 import com.terry.watch.R;
+import com.terry.watch.entitiy.HomeResponse;
 import com.terry.watch.entitiy.PositionResponse;
 import com.terry.watch.http.UserClient;
 
@@ -23,21 +24,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 肥仔-okex
+ * 欧阳拽白
  *
  * @author 张全
  */
-public class ApiTask extends ScheduleTask {
-    final String channelId = "1";
+public class ApiTask2 extends ScheduleTask {
+    final String channelId = "2";
     private NotificationManager notificationManager;
     private NotificationCompat.Builder mBuilder;
     private int notifyId = 1;
-    private String UID = Constant.UID_FVS;
+    private String UID=Constant.UID_OUYANG;
+
 
     @Override
     public long getScheduleTime() {
@@ -76,7 +80,7 @@ public class ApiTask extends ScheduleTask {
         } else {
             mBuilder = new NotificationCompat.Builder(LContext.getContext());
         }
-        Intent intent = UserActivity.getIntent(LContext.getContext(), UID);
+        Intent intent = UserActivity.getIntent(LContext.getContext(),UID);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(LContext.getContext(), 0, intent,
                 0);
@@ -101,12 +105,24 @@ public class ApiTask extends ScheduleTask {
 
     //---------------------持仓列表
     private void getPositionList(String uid) {
-        UserClient.getPositionList(uid, "okex").subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PositionResponse>() {
+        Observable.zip(UserClient.getPositionList(uid, "okex"),
+                UserClient.getPositionList(uid, "bitmex"),
+                new BiFunction<PositionResponse, PositionResponse, HomeResponse>() {
                     @Override
-                    public void accept(PositionResponse positionResponse) throws Exception {
-                        handlePositionList(positionResponse);
+                    public HomeResponse apply(PositionResponse positionResponse, PositionResponse positionResponse2) throws Exception {
+                        HomeResponse homeResponse = new HomeResponse();
+                        homeResponse.positionResponse = positionResponse;
+                        homeResponse.positionResponse2 = positionResponse2;
+                        return homeResponse;
+                    }
+                }
+        ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HomeResponse>() {
+                    @Override
+                    public void accept(HomeResponse homeResponse) throws Exception {
+                        handlePositionList(homeResponse.positionResponse, 1);
+                        handlePositionList(homeResponse.positionResponse2, 2);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -117,10 +133,11 @@ public class ApiTask extends ScheduleTask {
     }
 
     Map<String, Integer> lastCoinMap;
+    Map<String, Integer> lastCoinMap2;
 
     static int num;
 
-    private void handlePositionList(PositionResponse positionResponse) {
+    private void handlePositionList(PositionResponse positionResponse, int pos) {
         PositionResponse.DataBean data = positionResponse.data;
         if (null == data || null == data.position) {
             //无持仓
@@ -135,8 +152,16 @@ public class ApiTask extends ScheduleTask {
             coinMap.put(coin.title, num);
         }
 
-        Map<String, Integer> lastMap = lastCoinMap;
-        lastCoinMap = coinMap;
+        Map<String, Integer> lastMap;
+        String platform = pos == 1 ? "Okex" : "Bitmex";
+        if (pos == 1) {
+            lastMap = lastCoinMap;
+            lastCoinMap = coinMap;
+        } else {
+            lastMap = lastCoinMap2;
+            lastCoinMap2 = coinMap;
+        }
+
 
 //        if (num == 1) {
 //               //开仓
@@ -162,7 +187,7 @@ public class ApiTask extends ScheduleTask {
 
             //新开仓
             if (lastCoins.isEmpty() && !coins.isEmpty()) {
-                content.append("肥仔新开仓:");
+                content.append("欧阳拽白["+platform+"]新开仓:");
                 for (String name : coins) {
                     if (!lastCoins.contains(name)) {
                         content.append(name).append(coinMap.get(name) + "张 ");
@@ -176,7 +201,7 @@ public class ApiTask extends ScheduleTask {
                 for (String name : coins) {
                     if (!lastCoins.contains(name)) {
                         if (content.length() == 0) {
-                            content.append("肥仔新开仓:");
+                            content.append("欧阳拽白["+platform+"]新开仓:");
                         }
                         content.append(name).append(coinMap.get(name) + "张 ");
                     }
@@ -188,7 +213,7 @@ public class ApiTask extends ScheduleTask {
             //平仓
             content = new StringBuffer();
             if (!lastCoins.isEmpty() && coins.isEmpty()) { //全部平仓
-                content.append("肥仔全部平仓");
+                content.append("欧阳拽白["+platform+"]全部平仓");
                 sendNotification(content.toString());
             }
             content = new StringBuffer();
@@ -196,7 +221,7 @@ public class ApiTask extends ScheduleTask {
                 for (String name : lastCoins) {
                     if (!coins.contains(name)) {
                         if (content.length() == 0) {
-                            content.append("肥仔平仓:");
+                            content.append("欧阳拽白["+platform+"]平仓:");
                         }
                         content.append(name).append(" ");
                     }
@@ -216,7 +241,7 @@ public class ApiTask extends ScheduleTask {
                             continue;
                         }
                         if (content.length() == 0) {
-                            content.append("肥仔有新操作了：");
+                            content.append("欧阳拽白["+platform+"]有新操作了：");
                         }
                         if (lastValue > nowValue) { //减仓
                             content.append(name + "减仓" + diff + "张 ");

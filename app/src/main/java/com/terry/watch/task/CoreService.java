@@ -49,7 +49,7 @@ public class CoreService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        System.out.println("CoreService...onCreate");
         // 开启所有注册过的定时任务
 //		ScheduleTaskManager.getInstance().startAll();
 
@@ -71,6 +71,7 @@ public class CoreService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        System.out.println("CoreService...onStartCommand");
         getWackLock();
         ScheduleTaskManager.getInstance().startAll();
         dispatch(intent);
